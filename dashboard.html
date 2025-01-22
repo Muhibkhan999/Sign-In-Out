@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    <link rel="stylesheet" href="dashboard.css">
+    <title>Inbox</title>
+</head>
+<body>
+    <div class="header">
+        <div class="header_left">
+            <span class="material-symbols-outlined">menu</span>
+            <img src="https://ssl.gstatic.com/ui/v1/icons/mail/rfr/logo_gmail_lockup_default_1x_r5.png" alt="">
+        </div>
+        <div class="header_middle">
+            <span class="material-symbols-outlined">search</span>
+            <input type="text" placeholder="Search Mail">
+        </div>
+        <div class="header_right">
+            <span class="material-symbols-outlined">apps</span>
+            <span class="material-symbols-outlined">notifications</span>
+            <span class="material-symbols-outlined">account_circle</span>
+            <!-- Log Out Button -->
+            <button id="logoutButton" class="logoutButton">Log Out</button>
+        </div>
+        
+    </div>
+    <div class="main_body">
+        <div class="sidebar">
+            <button class="sidebar_compose">
+                <span class="material-symbols-outlined">edit</span>
+                Compose
+            </button>
+            <div class="sidebarOption sidebarOption_active">
+                <span class="material-symbols-outlined">inbox</span>
+                <h3>Inbox</h3>
+            </div>
+            <div class="sidebarOption">
+                <span class="material-symbols-outlined">star</span>
+                <h3>Starred</h3>
+            </div>
+            <div class="sidebarOption">
+                <span class="material-symbols-outlined">alarm</span>
+                <h3>Snoozed</h3>
+            </div>
+            <div class="sidebarOption">
+                <span class="material-symbols-outlined">label_important</span>
+                <h3>Important</h3>
+            </div>
+            <div class="sidebarOption">
+                <span class="material-symbols-outlined">near_me</span>
+                <h3>Sent</h3>
+            </div>
+            <div class="sidebarOption">
+                <span class="material-symbols-outlined">description</span>
+                <h3>Drafts</h3>
+            </div>
+            <div class="sidebarOption">
+                <span class="material-symbols-outlined">arrow_drop_down</span>
+                <h3>More</h3>
+            </div>
+            <div class="sidebar_footer">
+                <div class="sidebar_footerIcons">
+                    <span class="material-symbols-outlined">person</span>
+                    <span class="material-symbols-outlined">duo</span>
+                    <span class="material-symbols-outlined">smartphone</span>
+                </div>
+            </div>
+        </div>
+        <div class="emailList">
+            <div class="emailList_settings">
+                <div class="emailList_settingsLeft">
+                    <input type="checkbox">
+                    <span class="material-symbols-outlined">arrow_drop_down</span>
+                    <span class="material-symbols-outlined">redo</span>
+                    <span class="material-symbols-outlined">more_vert</span>
+                </div>
+                <div class="emailList_settingsRight">
+                    <span class="material-symbols-outlined">chevron_left</span>
+                    <span class="material-symbols-outlined">chevron_right</span>
+                    <span class="material-symbols-outlined">keyboard_hide</span>
+                    <span class="material-symbols-outlined">settings</span>
+                </div>
+            </div>
+            <div class="emailList_sections">
+                <div class="sections sections_selected">
+                    <span class="material-symbols-outlined">inbox</span>
+                    <h4>Primary</h4>
+                </div>
+                <div class="sections">
+                    <span class="material-symbols-outlined">group</span>
+                    <h4>Social</h4>
+                </div>
+                <div class="sections">
+                    <span class="material-symbols-outlined">sell</span>
+                    <h4>Promotions</h4>
+                </div>
+            </div>
+            <div class="emailList_list">
+                <div class="emailRow">
+                    <div class="emailRow_options">
+                        <input type="checkbox" />
+                        <span class="material-symbols-outlined">star</span>
+                        <span class="material-symbols-outlined">label_important</span>
+                    </div>
+                    <h3 class="emailRow_title">YouTube</h3>
+                    <div class="emailRow_message">
+                        <h4>CSS Exam Results: 
+                            <span class="emailRow_description">You got 90% in CSS EXAM!!!</span>
+                        </h4>
+                        <p class="emailRow_time">10pm</p>
+                    </div>
+                </div>
+                <div class="emailRow">
+                    <div class="emailRow_options">
+                        <input type="checkbox" />
+                        <span class="material-symbols-outlined">star</span>
+                        <span class="material-symbols-outlined">label_important</span>
+                    </div>
+                    <h3 class="emailRow_title">LinkedIn</h3>
+                    <div class="emailRow_message">
+                        <h4>New Connection Request: 
+                            <span class="emailRow_description">John Doe wants to connect with you.</span>
+                        </h4>
+                        <p class="emailRow_time">8pm</p>
+                    </div>
+                </div>
+                <div class="emailRow">
+                    <div class="emailRow_options">
+                        <input type="checkbox" />
+                        <span class="material-symbols-outlined">star</span>
+                        <span class="material-symbols-outlined">label_important</span>
+                    </div>
+                    <h3 class="emailRow_title">Google</h3>
+                    <div class="emailRow_message">
+                        <h4>Account Security Alert: 
+                            <span class="emailRow_description">New sign-in from an unknown device.</span>
+                        </h4>
+                        <p class="emailRow_time">6pm</p>
+                    </div>
+                </div>
+                <div class="emailRow">
+                    <div class="emailRow_options">
+                        <input type="checkbox" />
+                        <span class="material-symbols-outlined">star</span>
+                        <span class="material-symbols-outlined">label_important</span>
+                    </div>
+                    <h3 class="emailRow_title">Facebook</h3>
+                    <div class="emailRow_message">
+                        <h4>New Friend Suggestion: 
+                            <span class="emailRow_description">Check out people you may know.</span>
+                        </h4>
+                        <p class="emailRow_time">4pm</p>
+                    </div>
+                </div>
+                <div class="emailRow">
+                    <div class="emailRow_options">
+                        <input type="checkbox" />
+                        <span class="material-symbols-outlined">star</span>
+                        <span class="material-symbols-outlined">label_important</span>
+                    </div>
+                    <h3 class="emailRow_title">Twitter</h3>
+                    <div class="emailRow_message">
+                        <h4>New Follower: 
+                            <span class="emailRow_description">You have a new follower on Twitter.</span>
+                        </h4>
+                        <p class="emailRow_time">2pm</p>
+                    </div>
+                </div>
+                <div class="emailRow">
+                    <div class="emailRow_options">
+                        <input type="checkbox" />
+                        <span class="material-symbols-outlined">star</span>
+                        <span class="material-symbols-outlined">label_important</span>
+                    </div>
+                    <h3 class="emailRow_title">Twitter</h3>
+                    <div class="emailRow_message">
+                        <h4>New Follower: 
+                            <span class="emailRow_description">You have a new follower on Twitter.</span>
+                        </h4>
+                        <p class="emailRow_time">2pm</p>
+            </div>
+        </div>
+        <div class="emailRow">
+            <div class="emailRow_options">
+                <input type="checkbox" />
+                <span class="material-symbols-outlined">star</span>
+                <span class="material-symbols-outlined">label_important</span>
+            </div>
+            <h3 class="emailRow_title">Twitter</h3>
+            <div class="emailRow_message">
+                <h4>New Follower: 
+                    <span class="emailRow_description">You have a new follower on Twitter.</span>
+                </h4>
+                <p class="emailRow_time">2pm</p>
+            </div>
+    </div>
+    <div class="emailRow">
+        <div class="emailRow_options">
+            <input type="checkbox" />
+            <span class="material-symbols-outlined">star</span>
+            <span class="material-symbols-outlined">label_important</span>
+        </div>
+        <h3 class="emailRow_title">Twitter</h3>
+        <div class="emailRow_message">
+            <h4>New Follower: 
+                <span class="emailRow_description">You have a new follower on Twitter.</span>
+            </h4>
+            <p class="emailRow_time">2pm</p>
+        </div>
+</div>
+<div class="emailRow">
+    <div class="emailRow_options">
+        <input type="checkbox" />
+        <span class="material-symbols-outlined">star</span>
+        <span class="material-symbols-outlined">label_important</span>
+    </div>
+    <h3 class="emailRow_title">Facebook</h3>
+    <div class="emailRow_message">
+        <h4>New Friend Suggestion: 
+            <span class="emailRow_description">Check out people you may know.</span>
+        </h4>
+        <p class="emailRow_time">4pm</p>
+    </div>
+</div>
+<div class="emailRow">
+    <div class="emailRow_options">
+        <input type="checkbox" />
+        <span class="material-symbols-outlined">star</span>
+        <span class="material-symbols-outlined">label_important</span>
+    </div>
+    <h3 class="emailRow_title">YouTube</h3>
+    <div class="emailRow_message">
+        <h4>CSS Exam Results: 
+            <span class="emailRow_description">You got 90% in CSS EXAM!!!</span>
+        </h4>
+        <p class="emailRow_time">10pm</p>
+    </div>
+</div>
+<div class="emailRow">
+    <div class="emailRow_options">
+        <input type="checkbox" />
+        <span class="material-symbols-outlined">star</span>
+        <span class="material-symbols-outlined">label_important</span>
+    </div>
+    <h3 class="emailRow_title">LinkedIn</h3>
+    <div class="emailRow_message">
+        <h4>New Connection Request: 
+            <span class="emailRow_description">John Doe wants to connect with you.</span>
+        </h4>
+        <p class="emailRow_time">8pm</p>
+    </div>
+</div>
+<div class="emailRow">
+    <div class="emailRow_options">
+        <input type="checkbox" />
+        <span class="material-symbols-outlined">star</span>
+        <span class="material-symbols-outlined">label_important</span>
+    </div>
+    <h3 class="emailRow_title">Twitter</h3>
+    <div class="emailRow_message">
+        <h4>New Follower: 
+            <span class="emailRow_description">You have a new follower on Twitter.</span>
+        </h4>
+        <p class="emailRow_time">2pm</p>
+    </div>
+</div>
+<div class="emailRow">
+<div class="emailRow_options">
+    <input type="checkbox" />
+    <span class="material-symbols-outlined">star</span>
+    <span class="material-symbols-outlined">label_important</span>
+</div>
+<h3 class="emailRow_title">Facebook</h3>
+<div class="emailRow_message">
+    <h4>New Friend Suggestion: 
+        <span class="emailRow_description">Check out people you may know.</span>
+    </h4>
+    <p class="emailRow_time">4pm</p>
+</div>
+</div>
+<div class="emailRow">
+<div class="emailRow_options">
+    <input type="checkbox" />
+    <span class="material-symbols-outlined">star</span>
+    <span class="material-symbols-outlined">label_important</span>
+</div>
+<h3 class="emailRow_title">YouTube</h3>
+<div class="emailRow_message">
+    <h4>CSS Exam Results: 
+        <span class="emailRow_description">You got 90% in CSS EXAM!!!</span>
+    </h4>
+    <p class="emailRow_time">10pm</p>
+</div>
+</div>
+<div class="emailRow">
+    <div class="emailRow_options">
+        <input type="checkbox" />
+        <span class="material-symbols-outlined">star</span>
+        <span class="material-symbols-outlined">label_important</span>
+    </div>
+    <h3 class="emailRow_title">YouTube</h3>
+    <div class="emailRow_message">
+        <h4>CSS Exam Results: 
+            <span class="emailRow_description">You got 90% in CSS EXAM!!!</span>
+        </h4>
+        <p class="emailRow_time">10pm</p>
+    </div>
+</div>
+<div class="emailRow">
+    <div class="emailRow_options">
+        <input type="checkbox" />
+        <span class="material-symbols-outlined">star</span>
+        <span class="material-symbols-outlined">label_important</span>
+    </div>
+    <h3 class="emailRow_title">LinkedIn</h3>
+    <div class="emailRow_message">
+        <h4>New Connection Request: 
+            <span class="emailRow_description">John Doe wants to connect with you.</span>
+        </h4>
+        <p class="emailRow_time">8pm</p>
+    </div>
+</div>
+<div class="emailRow">
+    <div class="emailRow_options">
+        <input type="checkbox" />
+        <span class="material-symbols-outlined">star</span>
+        <span class="material-symbols-outlined">label_important</span>
+    </div>
+    <h3 class="emailRow_title">Twitter</h3>
+    <div class="emailRow_message">
+        <h4>New Follower: 
+            <span class="emailRow_description">You have a new follower on Twitter.</span>
+        </h4>
+        <p class="emailRow_time">2pm</p>
+    </div>
+</div>
+<div class="emailRow">
+<div class="emailRow_options">
+    <input type="checkbox" />
+    <span class="material-symbols-outlined">star</span>
+    <span class="material-symbols-outlined">label_important</span>
+</div>
+<h3 class="emailRow_title">Facebook</h3>
+<div class="emailRow_message">
+    <h4>New Friend Suggestion: 
+        <span class="emailRow_description">Check out people you may know.</span>
+    </h4>
+    <p class="emailRow_time">4pm</p>
+</div>
+</div>
+<div class="emailRow">
+<div class="emailRow_options">
+    <input type="checkbox" />
+    <span class="material-symbols-outlined">star</span>
+    <span class="material-symbols-outlined">label_important</span>
+</div>
+<h3 class="emailRow_title">YouTube</h3>
+<div class="emailRow_message">
+    <h4>CSS Exam Results: 
+        <span class="emailRow_description">You got 90% in CSS EXAM!!!</span>
+    </h4>
+    <p class="emailRow_time">10pm</p>
+</div>
+</div>
+
+<script src="dashboard.js"></script>
+
+</body>
+</html>

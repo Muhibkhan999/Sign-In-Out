@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <title>Sign up</title>
+
+</head>
+<body>
+
+  <div class="h1">
+    <h1>Sign up</h1>
+  </div>
+
+
+  <div class="main">
+    <div class="form">
+      <!-- <form onSubmit="signUpWithEmailPass(event)"> -->
+        <input id="name" type="text" placeholder="enter Name">
+        <input id="phone" type="phone" placeholder="enter phone">
+        <input id="email" type="text" placeholder="enter email">
+        <input id="password" type="password" placeholder="enter password">
+        <button id="signUp-btn">
+          sign up
+        </button>      
+        <!-- </form> -->
+    </div>
+    <h2>OR</h2>
+    <a href="https://accounts.google.com/InteractiveLogin/signinchooser?hl=en-gb&ifkv=AVdkyDnwwVENw_g6orRolBoz2-MjAIcxyXnS8_xb1i-W-uYG_svMuip6ad3gHGQRJLollEBU8HGo&ddm=1&flowName=GlifWebSignIn&flowEntry=ServiceLogin">
+      <button id="google-signUp">
+        sign up with Google
+      </button>
+    </a>
+   
+  </div>
+  <script type="module" src="app.js"></script>
+</body>
+</html>
