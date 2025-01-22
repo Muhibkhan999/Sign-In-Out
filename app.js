@@ -56,14 +56,18 @@ let signUpWithEmailPass = async (email,pass,name,phone) => {
         phoneNumber: phone,
       })
         console.log('success',docRef.id)
-        localStorage.setItem('user', JSON.stringify({
+        const newUser = {
           email: user.email,
           uid: user.uid,
           photoURL: user.photoURL,
           displayName: name,
           phoneNumber: phone,
           docId: docRef.id
-        }))
+        };
+        const existingUsersStr = localStorage.getItem('users');
+        const existingUsers = existingUsersStr ? JSON.parse(existingUsersStr) : [];
+        existingUsers.push(newUser);
+        localStorage.setItem('users', JSON.stringify(existingUsers));
         window.location.replace('dashboard.html')
     })
     .catch((error) => {
@@ -112,14 +116,18 @@ document.querySelector("#google-signUp").addEventListener('click',()=>{
         phoneNumber: user.phoneNumber,
       })
         console.log('success',docRef.id)
-        localStorage.setItem('user', JSON.stringify({
+        const newUser = {
           email: user.email,
           uid: user.uid,
           photoURL: user.photoURL,
           displayName: user.displayName,
           phoneNumber: user.phoneNumber,
           docId: docRef.id
-        }))
+        };
+        const existingUsersStr = localStorage.getItem('users');
+        const existingUsers = existingUsersStr ? JSON.parse(existingUsersStr) : [];
+        existingUsers.push(newUser);
+        localStorage.setItem('users', JSON.stringify(existingUsers));
         window.location.replace('dashboard.html')
       // IdP data available using getAdditionalUserInfo(result)
       // ...
@@ -159,7 +167,7 @@ checkUser();
 export let  signOutFun = async()=>{
   await signOut(auth).then(()=>{
           console.log('logged out')
-          localStorage.removeItem('user')
+          localStorage.removeItem('users')
           }).catch ((error)=>{
           console.error(error.message)
       

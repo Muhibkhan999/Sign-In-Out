@@ -30,8 +30,15 @@
     font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
     color: var(--text-primary);
     line-height: 1.5;
-  }
-  h1 {
+    overflow-x: hidden;
+    position: relative;
+    margin: 0;
+    padding: 0;
+    transition: background-color 0.3s ease;
+    scroll-behavior: smooth;
+    text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
+  }  h1 {
     font-size: clamp(2rem, 5vw, 2.8rem);
     font-weight: 800;
     color: var(--text-primary);
@@ -98,37 +105,74 @@
     letter-spacing: -0.02em;
   }
   .main {
-    background: rgba(255, 255, 255, 0.98);
+    background: rgba(255, 255, 255, 0.99);
     padding: clamp(1.5rem, 4vw, 2.5rem);
-    border-radius: 16px;
+    border-radius: 24px;
     box-shadow: var(--card-shadow);
     width: 100%;
     max-width: 420px;
-    backdrop-filter: blur(20px) saturate(180%);
-    -webkit-backdrop-filter: blur(20px) saturate(180%);
-    transform: translateY(0);
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    will-change: transform, box-shadow;
+    backdrop-filter: blur(25px) saturate(200%);
+    -webkit-backdrop-filter: blur(25px) saturate(200%);
+    transform: translateY(0) perspective(1000px);
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: transform, box-shadow, filter;
     margin-left: 10px;
+    isolation: isolate;
+    contain: layout style paint;
+    backface-visibility: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.1);
   }
 
   .main:hover {
-    transform: translateY(-5px);
-    box-shadow: var(--card-hover-shadow);
+    transform: translateY(-8px) scale(1.01);
+    box-shadow: var(--card-hover-shadow),
+                0 15px 35px rgba(0, 0, 0, 0.1),
+                0 0 20px rgba(var(--primary-color-rgb), 0.2);
+    filter: brightness(1.02);
   }
-
+ 
   .form {
     display: flex;
     flex-direction: column;
     gap: clamp(1rem, 2vw, 1.2rem);
-    margin-bottom: clamp(1.5rem, 3vw, 1.8rem);
+    margin-block: clamp(1.5rem, 3vw, 1.8rem);
     width: 100%;
     position: relative;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    will-change: transform, opacity;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: transform, opacity, filter;
+    isolation: isolate;
+    perspective: 1000px;
+    transform-style: preserve-3d;
+    backface-visibility: hidden;
+    animation: formEntry 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    backdrop-filter: blur(10px) saturate(180%);
+    -webkit-backdrop-filter: blur(10px) saturate(180%);
+    transform: translateZ(0);
+    contain: layout style paint;
+    touch-action: manipulation;
+    opacity: 0.98;
+    border-radius: 16px;
+    padding: clamp(1rem, 2vw, 1.5rem);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.1);
   }
 
-  input {
+  .form:hover {
+    opacity: 1;
+    transform: translateZ(8px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+  }
+
+  @keyframes formEntry {
+    from {
+      opacity: 0;
+      transform: translateY(20px) scale(0.98);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }  input {
     padding: 14px 16px;
     border: 2px solid var(--border-color);
     border-radius: 12px;
@@ -136,12 +180,39 @@
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     background: rgba(255, 255, 255, 0.95);
     width: 100%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    transform: translateY(0);
+    will-change: transform, border-color, box-shadow;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
   }
 
   input:hover {
     border-color: var(--border-hover);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background: rgba(255, 255, 255, 0.98);
   }
 
+  input:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(var(--primary-color-rgb), 0.2);
+    transform: translateY(-2px);
+    background: rgba(255, 255, 255, 1);
+  }
+
+  input::placeholder {
+    color: var(--text-secondary);
+    opacity: 0.7;
+    transition: opacity 0.3s ease;
+  }
+
+  input:focus::placeholder {
+    opacity: 0.5;
+  }
   input:focus {
     outline: none;
     border-color: var(--primary-color);
@@ -149,79 +220,68 @@
   }
 
   button {
-    padding: 14px 16px;
+    font-size: 17px;
+    background: transparent;
     border: none;
-    border-radius: 12px;
-    font-size: clamp(15px, 2vw, 16px);
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    padding: 1em 1.5em;
+    color: #ffedd3;
+    text-transform: uppercase;
     position: relative;
-    overflow: hidden;
-    backface-visibility: hidden;
-    transform: translateZ(0);
+    transition: 0.5s ease;
+    cursor: pointer;
+  }
+
+  button::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 2px;
+    width: 0;
+    background-color: #1877f2;
+    transition: 0.5s ease;
+  }
+
+  button:hover {
+    color: #1e1e2b;
+    transition-delay: 0.5s;
+  }
+
+  button:hover::before {
+    width: 100%;
   }
 
   button::after {
-    content: '';
+    content: "";
     position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 0;
+    left: 0;
+    bottom: 0;
     height: 0;
-    background: rgba(255, 255, 255, 0.3);
-    border-radius: 50%;
-    transform: translate(-50%, -50%);
-    transition: width 0.6s ease-out, height 0.6s ease-out;
-  }
-
-  button:active::after {
-    width: 300%;
-    height: 300%;
-  }
-
-  #signUp-btn {
-    background: linear-gradient(135deg, var(--primary-color), var(--primary-hover));
-    color: white;
     width: 100%;
+    background-color: #1877f2;
+    transition: 0.4s ease;
+    z-index: -1;
   }
 
-  #signUp-btn:hover {
-    background: linear-gradient(135deg, var(--primary-hover), #145fd2);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(24, 119, 242, 0.3);
+  button:hover::after {
+    height: 100%;
+    transition-delay: 0.4s;
+    color: aliceblue;
+  }
+
+  #signUp-btn, #google-signUp, #logout-btn {
+    width: 100%;
+    position: relative;
+    z-index: 1;
   }
 
   #google-signUp {
-    background-color: #ffffff;
-    color: #3c4043;
-    border: 2px solid var(--border-color);
-    width: 100%;
     margin-bottom: 1.2rem;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 12px;
     font-weight: 500;
-  }
-
-  #google-signUp:hover {
-    background-color: #f8f9fa;
-    border-color: var(--border-hover);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  }
-
-  #logout-btn {
-    background: linear-gradient(135deg, var(--danger-color), var(--danger-hover));
-    color: white;
-    width: 100%;
-  }
-
-  #logout-btn:hover {
-    background: linear-gradient(135deg, var(--danger-hover), #bd2130);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(220, 53, 69, 0.3);
   }
 
   h2 {
@@ -231,6 +291,10 @@
     font-size: clamp(14px, 2vw, 15px);
     font-weight: 500;
     letter-spacing: 0.4px;
+    line-height: 1.4;
+    text-transform: uppercase;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+    transition: color 0.3s ease;
   }
 
   @media (max-width: 480px) {
@@ -265,13 +329,7 @@
     }
 
     #google-signUp {
-      background-color: #ffffff;
       color: #3c4043;
-      border-color: var(--border-color);
-    }
-
-    #google-signUp:hover {
-      background-color: #f8f9fa;
     }
   }
 
