@@ -2,7 +2,8 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-app.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-analytics.js";
 import {
-  getAuth,signOut,
+  getAuth,
+  signOut,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   onAuthStateChanged,
@@ -17,96 +18,115 @@ import {
   deleteDoc,
   doc,
   updateDoc,
-  deleteField,
 } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-firestore.js";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+
+// Firebase configuration
 const firebaseConfig = {
-    apiKey: "AIzaSyCbcT2Dbv_gGvejEraqEmTRpjWfP_INZo0",
-    authDomain: "first-project-ed208.firebaseapp.com",
-    projectId: "first-project-ed208",
-    storageBucket: "first-project-ed208.firebasestorage.app",
-    messagingSenderId: "724413631751",
-    appId: "1:724413631751:web:4bac7ed9cd9c80212a89a2",
-    measurementId: "G-6HJ83XTGP7"
-  };
-  
-  // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
-  const analytics = getAnalytics(app)
-// Initialize Firestore
+  apiKey: "AIzaSyCbcT2Dbv_gGvejEraqEmTRpjWfP_INZo0",
+  authDomain: "first-project-ed208.firebaseapp.com",
+  projectId: "first-project-ed208",
+  storageBucket: "first-project-ed208.appspot.com",
+  messagingSenderId: "724413631751",
+  appId: "1:724413631751:web:4bac7ed9cd9c80212a89a2",
+  measurementId: "G-6HJ83XTGP7",
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
 const db = getFirestore(app);
-// Initialize Firebase Authentication and get a reference to the service
 const auth = getAuth(app);
-const provider = new GoogleAuthProvider(); //
-let signUpWithEmailPass = async (email,pass,name,phone) => {
-      console.log(email,name,pass,phone);
+const provider = new GoogleAuthProvider();
+
+// Function to handle sign-up with email and password
+let signUpWithEmailPass = async (email, pass, name, phone) => {
+  console.log(email, name, pass, phone);
+  
+  // Check if email already exists
   await createUserWithEmailAndPassword(auth, email, pass)
-    .then(async(userCredential) => {
-      // Signed up
+    .then(async (userCredential) => {
       const user = userCredential.user;
-      // console.log("signed up", user);
-       const docRef = await addDoc(collection(db, "users"), {
+      const docRef = await addDoc(collection(db, "users"), {
         email: user.email,
         uid: user.uid,
         photoURL: user.photoURL,
         displayName: name,
         phoneNumber: phone,
-      })
-        console.log('success',docRef.id)
-        const newUser = {
-          email: user.email,
-          uid: user.uid,
-          photoURL: user.photoURL,
-          displayName: name,
-          phoneNumber: phone,
-          docId: docRef.id
-        };
-        const existingUsersStr = localStorage.getItem('users');
-        const existingUsers = existingUsersStr ? JSON.parse(existingUsersStr) : [];
-        existingUsers.push(newUser);
-        localStorage.setItem('users', JSON.stringify(existingUsers));
-        window.location.replace('dashboard.html')
+      });
+
+      const newUser = {
+        email: user.email,
+        uid: user.uid,
+        photoURL: user.photoURL,
+        displayName: name,
+        phoneNumber: phone,
+        docId: docRef.id,
+      };
+
+      // Log user data in console
+      console.log("User signed up successfully:", newUser);
+
+      localStorage.setItem("user", JSON.stringify(newUser));
+      const existingUsersStr = localStorage.getItem("users");
+      const existingUsers = existingUsersStr ? JSON.parse(existingUsersStr) : [];
+      existingUsers.push(newUser);
+      localStorage.setItem("users", JSON.stringify(existingUsers));
+      window.location.replace("dashboard.html");
     })
     .catch((error) => {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      console.log(errorCode, errorMessage);
+      if (error.code === 'auth/email-already-in-use') {
+        alert("This email is already in use. Please try logging in or use another email.");
+      } else {
+        console.error(error.code, error.message);
+      }
     });
 };
-document.querySelector("#signUp-btn").addEventListener("click", function () {
-  let emailValue = document.querySelector("#email").value;
+
+// Event listener for sign-up button
+document.querySelector("#signUp-btn")?.addEventListener("click", function () {
+  let emailValue = document.querySelector("#email")?.value;
   let passwordValue = document.querySelector("#password").value;
   let nameValue = document.querySelector("#name").value;
   let phoneValue = document.querySelector("#phone").value;
-  signUpWithEmailPass(emailValue,passwordValue,nameValue,phoneValue)
+  signUpWithEmailPass(emailValue, passwordValue, nameValue, phoneValue);
 });
-let signIn = async () => {
-  await signInWithEmailAndPassword(auth, "xyz@gmail.com", "123456")
+
+// Function to handle sign-in with email and password
+let signIn = async (email, password) => {
+  await signInWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
-      // Signed in
       const user = userCredential.user;
-      console.log("login success: ", user);
-      window.location.replace('dashboard.html');
-      // ...
+
+      const newUser = {
+        email: user.email,
+        uid: user.uid,
+        photoURL: user.photoURL,
+        displayName: user.displayName,
+        phoneNumber: user.phoneNumber,
+      };
+
+      // Log user data in console
+      console.log("User signed in successfully:", newUser);
+
+      localStorage.setItem("user", JSON.stringify(newUser));
+      window.location.replace("dashboard.html"); // Redirect to dashboard
     })
     .catch((error) => {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      console.error(errorCode, errorMessage);
+      console.error(error.code, error.message);
     });
 };
-// signIn()
-/// signup with google
-document.querySelector("#google-signUp").addEventListener('click',()=>{
+
+// Event listener for sign-in button
+document.querySelector("#signIn-btn")?.addEventListener("click", function () {
+  let emailValue = document.querySelector("#email")?.value;
+  let passwordValue = document.querySelector("#password")?.value;
+  signIn(emailValue, passwordValue);
+});
+
+// Event listener for Google sign-in button
+document.querySelector("#google-signUp")?.addEventListener("click", () => {
   signInWithPopup(auth, provider)
-    .then(async(result) => {
-      // This gives you a Google Access Token. You can use it to access the Google API.
-      const credential = GoogleAuthProvider.credentialFromResult(result);
-      const token = credential.accessToken;
-      // The signed-in user info.
+    .then(async (result) => {
       const user = result.user;
       const docRef = await addDoc(collection(db, "users"), {
         email: user.email,
@@ -114,49 +134,36 @@ document.querySelector("#google-signUp").addEventListener('click',()=>{
         photoURL: user.photoURL,
         displayName: user.displayName,
         phoneNumber: user.phoneNumber,
-      })
-        console.log('success',docRef.id)
-        const newUser = {
-          email: user.email,
-          uid: user.uid,
-          photoURL: user.photoURL,
-          displayName: user.displayName,
-          phoneNumber: user.phoneNumber,
-          docId: docRef.id
-        };
-        const existingUsersStr = localStorage.getItem('users');
-        const existingUsers = existingUsersStr ? JSON.parse(existingUsersStr) : [];
-        existingUsers.push(newUser);
-        localStorage.setItem('users', JSON.stringify(existingUsers));
-        window.location.replace('dashboard.html')
-      // IdP data available using getAdditionalUserInfo(result)
-      // ...
-    }).catch((error) => {
-      // Handle Errors here.
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      // The email of the user's account used.
-      const email = error.customData.email;
-      // The AuthCredential type that was used.
-      const credential = GoogleAuthProvider.credentialFromError(error);
-      // ...
-      console.error(errorMessage)
+      });
+
+      const newUser = {
+        email: user.email,
+        uid: user.uid,
+        photoURL: user.photoURL,
+        displayName: user.displayName,
+        phoneNumber: user.phoneNumber,
+        docId: docRef.id,
+      };
+
+      // Log user data in console
+      console.log("User signed in with Google:", newUser);
+
+      localStorage.setItem("user", JSON.stringify(newUser));
+      window.location.replace("dashboard.html");
+    })
+    .catch((error) => {
+      console.error(error.code, error.message);
     });
-})
-// TO CHECK USER IS LOG-IN OR NOT
+});
+
+// Function to check the authenticated user
 let checkUser = async () => {
   try {
     await onAuthStateChanged(auth, (user) => {
       if (user) {
-        // User is signed in, see docs for a list of available properties
-        // https://firebase.google.com/docs/reference/js/auth.user
-        const uid = user.uid;
-        console.log(user);
-        // ...
+        console.log("User is signed in:", user);
       } else {
-        // User is signed out
-        console.log("signed out");
-        // ...
+        console.log("No user is signed in.");
       }
     });
   } catch (error) {
@@ -164,12 +171,16 @@ let checkUser = async () => {
   }
 };
 checkUser();
-export let  signOutFun = async()=>{
-  await signOut(auth).then(()=>{
-          console.log('logged out')
-          localStorage.removeItem('users')
-          }).catch ((error)=>{
-          console.error(error.message)
-      
-          })
-}
+
+// Function to handle sign-out
+export let signOutFun = async () => {
+  await signOut(auth)
+    .then(() => {
+      console.log("Logged out successfully");
+      localStorage.removeItem("user");
+      window.location.replace("index.html"); // Redirect to home page
+    })
+    .catch((error) => {
+      console.error(error.message);
+    });
+};

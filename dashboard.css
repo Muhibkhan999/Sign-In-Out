@@ -67,7 +67,7 @@ body, html {
 }
 
 /* Button Styles */
-button, .sidebar_compose, .logoutButton {
+button, .sidebar_compose {
     padding: 15px 25px;
     border: unset;
     border-radius: 15px;
@@ -83,7 +83,7 @@ button, .sidebar_compose, .logoutButton {
     overflow: hidden;
 }
 
-button::before, .sidebar_compose::before, .logoutButton::before {
+button::before, .sidebar_compose::before {
     content: "";
     position: absolute;
     top: 0;
@@ -98,14 +98,66 @@ button::before, .sidebar_compose::before, .logoutButton::before {
     transition: all 250ms;
 }
 
-button:hover, .sidebar_compose:hover, .logoutButton:hover {
+/*Log Out Button*/
+button:hover, .sidebar_compose:hover {
     color: #e8e8e8;
 }
 
-button:hover::before, .sidebar_compose:hover::before, .logoutButton:hover::before {
-    width: 100%;
+button:hover::before, .sidebar_compose:hover::before {
+    width: 60%;
 }
+  button {
+      font-family: inherit;
+      font-size: 16px;
+      background: #212121;
+      color: white;
+      fill: rgb(155, 153, 153);
+      padding: 0.5em 0.8em;
+      padding-left: 0.7em;
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      border: none;
+      border-radius: 12px;
+      font-weight: 1000;
+  }
 
+  button span {
+      display: block;
+      margin-left: 0.3em;
+      transition: all 0.3s ease-in-out;
+  }
+
+  button svg {
+      display: block;
+      transform-origin: center center;
+      transition: transform 0.3s ease-in-out;
+  }
+
+  button:hover {
+      background: #000;
+  }
+
+  button:hover .svg-wrapper {
+      transform: scale(1.15);
+      transition: 0.5s linear;
+  }
+
+  button:hover svg {
+      transform: translateX(1em) scale(1);
+      fill: #fff;
+  }
+
+  button:hover span {
+      opacity: 0;
+      transition: 0.5s linear;
+  }
+
+  button:active {
+      transform: scale(0.90);
+  }
+
+  
 .sidebarOption {
     display: flex;
     align-items: center;
